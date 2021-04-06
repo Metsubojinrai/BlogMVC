@@ -26,9 +26,7 @@
   <ItemGroup>
     <Folder Include="Areas\Account\Controllers\" />
     <Folder Include="Areas\Account\Data\" />
-    <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Manage\Data\" />
     <Folder Include="wwwroot\File\Image\User\" />
   </ItemGroup>

@@ -1,0 +1,18 @@
+﻿@model RoleViewModel
+
+<h1 class="bg-info text-white">Tạo Role mới</h1>
+<a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="CreateRole" method="post">
+    <div class="form-group">
+        <label asp-for="Input.Name">Tên Role:</label>
+        <input asp-for="Input.Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Input.Description">Mô tả:</label>
+        <input asp-for="Input.Description" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Tạo</button>
+</form>

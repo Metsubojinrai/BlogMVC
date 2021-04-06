@@ -28,13 +28,13 @@ using Blog.Models;
 #nullable disable
 #nullable restore
 #line 3 "D:\New folder (2)\Blog\Blog\Areas\Admin\Views\_ViewImports.cshtml"
-using Blog.Areas.Manage.Models;
+using Blog.Areas.Admin.Models;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"7091c65830b0329e613be026ede8a57552863778", @"/Areas/Admin/Views/_ViewStart.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"e34b890eedeaf452bd8762eb9ea8cb8abb46cde1", @"/Areas/Admin/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"1f647a60f968f85eecd5dd13c73776ea3ecf7a9b", @"/Areas/Admin/Views/_ViewImports.cshtml")]
     public class Areas_Admin_Views__ViewStart : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         #pragma warning disable 1998

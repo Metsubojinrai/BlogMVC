@@ -458,3 +458,6 @@ D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Manage\Views\Manage\_St
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Manage\Views\Manage\_ManageNav.cshtml.g.cs
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Manage\Views\Manage\ChangePassword.cshtml.g.cs
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Manage\Views\Manage\SetPassword.cshtml.g.cs
+D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Admin\Views\Role\Index.cshtml.g.cs
+D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Admin\Views\Role\CreateRole.cshtml.g.cs
+D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Admin\Views\Role\EditRole.cshtml.g.cs
