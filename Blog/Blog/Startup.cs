@@ -70,11 +70,23 @@ namespace Blog
                 options.LowercaseQueryStrings = false;      // không bắt query trong url phải in thường
             });
 
+            services.ConfigureApplicationCookie(options => {
+                // options.Cookie.HttpOnly = true;
+                // options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+                options.LoginPath = $"/login/";
+                options.LogoutPath = $"/logout/";
+                options.AccessDeniedPath = $"/Account/AccessDenied";
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RoleManager<Role> roleManager,
+            UserManager<User> userManager)
         {
+            SeedDataRoles.SeedRoles(roleManager);
+            SeedDataAdmin.SeedAdmin(userManager);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

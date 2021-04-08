@@ -22,6 +22,15 @@ namespace Blog.Data
                     entityType.SetTableName(tableName[6..]);
                 }
             }
+
+            builder.Entity<Category>(entity => {
+                entity.HasIndex(p => p.Slug);
+            });
+            builder.Entity<PostCategory>().HasKey(p => new { p.PostID, p.CategoryID });
         }
+
+        public DbSet<Category> Categories { set; get; }
+        public DbSet<Post> Posts { set; get; }
+        public DbSet<PostCategory> PostCategories { set; get; }
     }
 }

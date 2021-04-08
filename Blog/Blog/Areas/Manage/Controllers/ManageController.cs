@@ -118,9 +118,9 @@ namespace Blog.Areas.Manage.Controllers
                     using (var stream = new FileStream(filePath,FileMode.Create))
                     {
                         await file.CopyToAsync(stream);
-                    }
-                    user.ProfilePicture = fileName;
+                    }                
                 }
+                user.ProfilePicture = fileName;
                 await _userManager.UpdateAsync(user);
             }
             await _signInManager.RefreshSignInAsync(user);

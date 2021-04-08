@@ -13,8 +13,6 @@
             <td>@role.Description</td>
             <td>
                 <form asp-action="DeleteRole" asp-route-id="@role.Id" method="post">
-                    <a class="btn btn-primary btn-sm" asp-action="EditRole"
-                       asp-route-id="@role.Id">Cập nhật</a>
                     <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
                 </form>
             </td>
