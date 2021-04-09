@@ -1,9 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Blog.Models
 @inject SignInManager<User> SignInManager
-@{
-    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
-}
+
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->

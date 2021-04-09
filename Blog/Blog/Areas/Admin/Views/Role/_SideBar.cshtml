@@ -2,7 +2,6 @@
 @using Blog.Models
 @inject SignInManager<User> SignInManager
 @{
-    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
     string activePage = System.IO.Path.GetFileNameWithoutExtension(ViewContext.ActionDescriptor.DisplayName);
     Func<string, string, string> ActiveClass = (string activePage, string page) =>
     {
