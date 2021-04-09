@@ -1,5 +1,7 @@
-﻿using Blog.Data;
+﻿using Blog.CustomAuthorization;
+using Blog.Data;
 using Blog.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -77,7 +79,19 @@ namespace Blog
                 options.LogoutPath = $"/logout/";
                 options.AccessDeniedPath = $"/Account/AccessDenied";
             });
-
+            services.AddTransient<IAuthorizationHandler, MinimumAgeHandler>();
+            services.AddTransient<IAuthorizationHandler, CanUpdatePostAgeHandler>();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("CanUpdatePostAge", policy =>
+                {
+                    policy.Requirements.Add(new MinimumAgeRequirement(18)
+                    {
+                        OpenTime = 8,
+                        CloseTime = 22
+                    });
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

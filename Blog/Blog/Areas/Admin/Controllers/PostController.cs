@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Blog.Core;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Blog.CustomAuthorization;
 
 namespace Blog.Areas_Admin_Controllers
 {
@@ -21,13 +22,14 @@ namespace Blog.Areas_Admin_Controllers
         private readonly BlogDbContext _context;
         private readonly UserManager<User> _usermanager;
         private readonly ILogger<PostController> _logger;
-
+        private readonly IAuthorizationService _authorizationService;
         public PostController(BlogDbContext context, UserManager<User> usermanager,
-            ILogger<PostController> logger)
+            ILogger<PostController> logger, IAuthorizationService authorizationService)
         {
             _context = context;
             _usermanager = usermanager;
             _logger = logger;
+            _authorizationService = authorizationService;
         }
 
         //mảng chứa các CategoryID của bài Post
@@ -208,7 +210,14 @@ namespace Blog.Areas_Admin_Controllers
                 return NotFound();
             }
 
-
+            // Kiểm tra nhóm Admin hoặc chủ sở hữu Post thì có quyênn
+            var rs = await _authorizationService.AuthorizeAsync(User, post,
+                                                                new CanUpdatePostRequirement(true, true));
+            if (!rs.Succeeded)
+            {
+                return Forbid();
+            }
+            // Có quyền
 
             // Phát sinh Slug theo Title
             if (ModelState["Slug"].ValidationState == ModelValidationState.Invalid)
@@ -311,6 +320,14 @@ namespace Blog.Areas_Admin_Controllers
             {
                 return NotFound();
             }
+            // Kiểm tra nhóm Admin hoặc chủ sở hữu Post thì có quyênn
+            var rs = await _authorizationService.AuthorizeAsync(User, post,
+                                                                new CanUpdatePostRequirement(true, true));
+            if (!rs.Succeeded)
+            {
+                return Forbid();
+            }
+            // Có quyền
 
             return View(post);
         }
