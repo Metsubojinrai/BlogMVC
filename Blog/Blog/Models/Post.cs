@@ -12,7 +12,7 @@ namespace Blog.Models
     {
         [Required]
         [Display(Name = "ID Tác giả")]
-        public Guid AuthorId { set; get; }
+        public long AuthorId { set; get; }
         [ForeignKey("AuthorId")]
 
         [Display(Name = "Tác giả")]

@@ -13,7 +13,6 @@ namespace Blog.Data
         {
             var role1 = new Role
             {
-                Id = Guid.NewGuid(),
                 Name = "Admin",
                 Description = "Administrator",
                 NormalizedName = "ADMIN"
@@ -21,7 +20,6 @@ namespace Blog.Data
 
             var role2 = new Role
             {
-                Id = Guid.NewGuid(),
                 Name = "Editor",
                 Description = "Biên tập viên",
                 NormalizedName = "EDITOR"
@@ -29,7 +27,7 @@ namespace Blog.Data
 
             var role3 = new Role
             {
-                Id = Guid.NewGuid(),
+
                 Name = "User",
                 Description = "Người dùng",
                 NormalizedName = "USER"

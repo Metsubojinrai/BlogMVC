@@ -83,6 +83,7 @@
     <Folder Include="Areas\Account\Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Manage\Data\" />
+    <Folder Include="Migrations\" />
     <Folder Include="wwwroot\File\Image\User\" />
   </ItemGroup>
 

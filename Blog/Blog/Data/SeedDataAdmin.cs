@@ -13,7 +13,7 @@ namespace Blog.Data
         {
             if(userManager.FindByEmailAsync("admin@gmail.com").Result == null)
             {
-                User user = new User
+                User user = new()
                 {
                     UserName = "admin",
                     Email = "admin@gmail.com"

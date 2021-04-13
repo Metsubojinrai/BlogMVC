@@ -54,7 +54,6 @@ namespace Blog.Models
                 parent = parent.ParentCategory;
             }
 
-
             li.Reverse();
             return li;
         }

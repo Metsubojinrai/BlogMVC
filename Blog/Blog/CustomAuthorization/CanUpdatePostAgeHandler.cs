@@ -47,8 +47,8 @@ namespace Blog.CustomAuthorization
                 return Task.CompletedTask;
             }
 
-            TimeSpan start = new TimeSpan(requirement.OpenTime, 0, 0);
-            TimeSpan end = new TimeSpan(requirement.CloseTime, 0, 0);
+            TimeSpan start = new(requirement.OpenTime, 0, 0);
+            TimeSpan end = new(requirement.CloseTime, 0, 0);
             TimeSpan now = DateTime.Now.TimeOfDay;
             // see if start comes before end
             if (start < end)

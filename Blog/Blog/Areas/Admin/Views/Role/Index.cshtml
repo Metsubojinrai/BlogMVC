@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Role>
+﻿@model IEnumerable<RoleListViewModel>
 
 <h1 class="bg-info text-white">Danh sách Role</h1>
 <a asp-action="CreateRole" class="btn btn-secondary">Tạo Role mới</a>
@@ -13,6 +13,9 @@
             <td>@role.Description</td>
             <td>
                 <form asp-action="DeleteRole" asp-route-id="@role.Id" method="post">
+                    <a class="btn btn-sm btn-primary" asp-action="EditRole" asp-route-id="@role.Id">Cập nhật</a>
+                    <a class="btn btn-sm btn-primary" asp-action="Index" asp-controller="Claims"
+                       asp-route-id="@role.Id">Claims</a>
                     <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
                 </form>
             </td>

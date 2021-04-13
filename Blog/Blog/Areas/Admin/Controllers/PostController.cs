@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +11,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Blog.Core;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Blog.CustomAuthorization;
 
 namespace Blog.Areas_Admin_Controllers
 {
-    [Authorize(Roles = "Admin, Editor")]
+    [Authorize(Policy ="CanViewPost")]
     public class PostController : Controller
     {
         private readonly BlogDbContext _context;
@@ -34,15 +32,16 @@ namespace Blog.Areas_Admin_Controllers
 
         //mảng chứa các CategoryID của bài Post
         [BindProperty]
-        public int[] selectedCategories { set; get; }
+        public int[] SelectedCategories { set; get; }
 
         public const int ITEMS_PER_PAGE = 4;
         // GET: Post
-        public async Task<IActionResult> Index([Bind(Prefix = "page")] int pageNumber)
+   
+        public async Task<IActionResult> Index([FromQuery] int page)
         {
 
-            if (pageNumber == 0)
-                pageNumber = 1;
+            if (page == 0)
+                page = 1;
 
             var listPosts = _context.Posts
                 .Include(p => p.Author)                // Tải Author
@@ -50,24 +49,24 @@ namespace Blog.Areas_Admin_Controllers
                 .ThenInclude(c => c.Category)          // Mỗi PostCateogry tải luôn Categtory
                 .OrderByDescending(p => p.DateCreated);
 
-            _logger.LogInformation(pageNumber.ToString());
+            _logger.LogInformation(page.ToString());
 
             // Lấy tổng số dòng dữ liệu
             var totalItems = listPosts.Count();
             // Tính số trang hiện thị (mỗi trang hiện thị ITEMS_PER_PAGE mục)
             int totalPages = (int)Math.Ceiling((double)totalItems / ITEMS_PER_PAGE);
 
-            if (pageNumber > totalPages)
+            if (page > totalPages)
                 return RedirectToAction(nameof(PostController.Index), new { page = totalPages });
 
 
             var posts = await listPosts
-                            .Skip(ITEMS_PER_PAGE * (pageNumber - 1))       // Bỏ qua các trang trước
+                            .Skip(ITEMS_PER_PAGE * (page - 1))       // Bỏ qua các trang trước
                             .Take(ITEMS_PER_PAGE)                          // Lấy số phần tử của trang hiện tại
                             .ToListAsync();
 
             // return View (await listPosts.ToListAsync());
-            ViewData["pageNumber"] = pageNumber;
+            ViewData["pageNumber"] = page;
             ViewData["totalPages"] = totalPages;
 
             return View(posts.AsEnumerable());
@@ -93,6 +92,7 @@ namespace Blog.Areas_Admin_Controllers
         }
 
         // GET: Post/Create
+        [Authorize(Policy = "CanCreatePost")]
         public async Task<IActionResult> CreateAsync()
         {
             // Thông tin về User tạo Post
@@ -115,7 +115,11 @@ namespace Blog.Areas_Admin_Controllers
             var user = await _usermanager.GetUserAsync(User);
             ViewData["userpost"] = $"{user.UserName} {user.FullName}";
 
-            // Phát sinh Slug theo Title
+            if (SelectedCategories.Length == 0)
+            {
+                ModelState.AddModelError(String.Empty, "Phải ít nhất một chuyên mục");
+            }
+
             if (ModelState["Slug"].ValidationState == ModelValidationState.Invalid)
             {
                 post.Slug = Utils.GenerateSlug(post.Title); //phương thức tĩnh, chuyển đổi Title thành Url
@@ -123,12 +127,6 @@ namespace Blog.Areas_Admin_Controllers
                 // Thiết lập và kiểm tra lại Model
                 ModelState.Clear();
                 TryValidateModel(post);
-            }
-
-
-            if (selectedCategories.Length == 0)
-            {
-                ModelState.AddModelError(String.Empty, "Phải ít nhất một chuyên mục");
             }
 
             bool SlugExisted = await _context.Posts.Where(p => p.Slug == post.Slug).AnyAsync();
@@ -155,7 +153,7 @@ namespace Blog.Areas_Admin_Controllers
                 await _context.SaveChangesAsync();
 
                 // Chèn thông tin về PostCategory của bài Post
-                foreach (var selectedCategory in selectedCategories)
+                foreach (var selectedCategory in SelectedCategories)
                 {
                     _context.Add(new PostCategory() { PostID = newpost.PostId, CategoryID = selectedCategory });
                 }
@@ -166,11 +164,12 @@ namespace Blog.Areas_Admin_Controllers
 
             //phần tử HTML chọn các Category sẽ sử dụng MultiSelectList và gửi nó đến View
             var categories = await _context.Categories.ToListAsync();
-            ViewData["categories"] = new MultiSelectList(categories, "Id", "Title", selectedCategories);
+            ViewData["categories"] = new MultiSelectList(categories, "Id", "Title", SelectedCategories);
             return View(post);
         }
 
         // GET: Post/Edit/5
+        [Authorize(Policy = "CanUpdatePost")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -211,12 +210,12 @@ namespace Blog.Areas_Admin_Controllers
             }
 
             // Kiểm tra nhóm Admin hoặc chủ sở hữu Post thì có quyênn
-            var rs = await _authorizationService.AuthorizeAsync(User, post,
-                                                                new CanUpdatePostRequirement(true, true));
-            if (!rs.Succeeded)
-            {
-                return Forbid();
-            }
+            //var rs = await _authorizationService.AuthorizeAsync(User, post,
+            //                                                    new CanUpdatePostRequirement(true, true));
+            //if (!rs.Succeeded)
+            //{
+            //    return Forbid();
+            //}
             // Có quyền
 
             // Phát sinh Slug theo Title
@@ -229,7 +228,7 @@ namespace Blog.Areas_Admin_Controllers
                 TryValidateModel(post);
             }
 
-            if (selectedCategories.Length == 0)
+            if (SelectedCategories.Length == 0)
             {
                 ModelState.AddModelError(String.Empty, "Phải ít nhất một chuyên mục");
             }
@@ -261,12 +260,12 @@ namespace Blog.Areas_Admin_Controllers
 
                 // Các danh mục không có trong selectedCategories
                 var listcateremove = postUpdate.PostCategories
-                                               .Where(p => !selectedCategories.Contains(p.CategoryID))
+                                               .Where(p => !SelectedCategories.Contains(p.CategoryID))
                                                .ToList();
                 listcateremove.ForEach(c => postUpdate.PostCategories.Remove(c));
 
                 // Các ID category chưa có trong postUpdate.PostCategories
-                var listCateAdd = selectedCategories
+                var listCateAdd = SelectedCategories
                                     .Where(
                                         id => !postUpdate.PostCategories.Where(c => c.CategoryID == id).Any()
                                     ).ToList();
@@ -301,18 +300,18 @@ namespace Blog.Areas_Admin_Controllers
             }
 
             var categories = await _context.Categories.ToListAsync();
-            ViewData["categories"] = new MultiSelectList(categories, "Id", "Title", selectedCategories);
+            ViewData["categories"] = new MultiSelectList(categories, "Id", "Title", SelectedCategories);
             return View(post);
         }
 
         // GET: Post/Delete/5
+        [Authorize(Policy = "CanDeletePost")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
             var post = await _context.Posts
                 .Include(p => p.Author)
                 .FirstOrDefaultAsync(m => m.PostId == id);
@@ -320,15 +319,6 @@ namespace Blog.Areas_Admin_Controllers
             {
                 return NotFound();
             }
-            // Kiểm tra nhóm Admin hoặc chủ sở hữu Post thì có quyênn
-            var rs = await _authorizationService.AuthorizeAsync(User, post,
-                                                                new CanUpdatePostRequirement(true, true));
-            if (!rs.Succeeded)
-            {
-                return Forbid();
-            }
-            // Có quyền
-
             return View(post);
         }
 

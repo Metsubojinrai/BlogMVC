@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Blog.Data
 {
-    public class BlogDbContext : IdentityDbContext<User, Role, Guid>
+    public class BlogDbContext : IdentityDbContext<User, Role, long>
     {
         public BlogDbContext(DbContextOptions<BlogDbContext>options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder builder)

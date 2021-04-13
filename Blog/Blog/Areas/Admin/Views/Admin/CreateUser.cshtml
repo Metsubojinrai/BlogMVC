@@ -1,7 +1,18 @@
 ﻿@model User
 
+@{
+    Layout = "/Areas/Admin/Views/Admin/_Layout.cshtml";
+}
+
+@section TopBar {
+    @await Html.PartialAsync("/Areas/Admin/Views/Admin/_TopBar.cshtml")
+}
+
+@section SideBar {
+    <partial name="/Areas/Admin/Views/Admin/_SideBar.cshtml" />
+}
 <h1 class="bg-info text-white">Tạo User mới</h1>
-<a asp-action="Index" asp-controller="Role" class="btn btn-secondary">Quay lại</a>
+<a asp-action="ListUser" asp-controller="Role" class="btn btn-secondary">Quay lại</a>
 <div asp-validation-summary="All" class="text-danger"></div>
 
 <form asp-action="CreateUser" method="post">

@@ -29,12 +29,16 @@ namespace Blog.Areas.Admin.Controllers
             _dbContext = dbContext;
         }
 
-        [TempData] // Sử dụng Session lưu thông báo
-        public string StatusMessage { get; set; }
-
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public IActionResult Index()
         {
-            List<Role> Roles = await _roleManager.Roles.ToListAsync();
+            List<RoleListViewModel> Roles = new();
+            Roles = (List<RoleListViewModel>)_roleManager.Roles.Select(r => new RoleListViewModel
+            {
+                Name = r.Name,
+                Id = r.Id,
+                Description = r.Description
+            }).ToList();
             return View(Roles);
         }
 
@@ -64,6 +68,46 @@ namespace Blog.Areas.Admin.Controllers
                 else AddErrors(result);
             }
             return View(role);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditRole(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            RoleViewModel model = new();
+            if(!String.IsNullOrEmpty(id))
+            {
+                var role = await _roleManager.FindByIdAsync(id);
+                if(role!=null)
+                {
+                    model.Id = role.Id;
+                    model.Name = role.Name;
+                    model.Description = role.Description;
+                }
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditRole(string id, RoleViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                bool isExist = !String.IsNullOrEmpty(id);
+                if (!isExist)
+                    return NotFound();
+                var role = await _roleManager.FindByIdAsync(id);
+                role.Name = model.Name;
+                role.Description = model.Description;
+                _dbContext.Update(role);
+                await _dbContext.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(model);
         }
 
         [HttpPost]

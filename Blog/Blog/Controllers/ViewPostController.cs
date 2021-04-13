@@ -16,7 +16,7 @@ namespace Blog.Controllers
     {
         private readonly ILogger<ViewPostController> _logger;
         private readonly BlogDbContext _context;
-        private IMemoryCache _cache; //lưu cache vào bộ nhớ
+        private readonly IMemoryCache _cache; //lưu cache vào bộ nhớ
 
         // Số bài hiện thị viết trên một trang danh mục
         public const int ITEMS_PER_PAGE = 4;
@@ -39,13 +39,11 @@ namespace Blog.Controllers
             Category category = null;
             if (!string.IsNullOrEmpty(slugCategory))
             {
-
                 category = FindCategoryBySlug(categories, slugCategory);
                 if (category == null)
                 {
                     return NotFound("Không thấy Category");
                 }
-
             }
 
             ViewData["categories"] = categories;
@@ -57,18 +55,17 @@ namespace Blog.Controllers
                 .Include(p => p.Author) // Load Author cho post  
                 .Include(p => p.PostCategories) // Load các Category của Post
                 .ThenInclude(c => c.Category)
+                .OrderByDescending(p => p.DateCreated)
                 .AsQueryable();
 
             if (category != null)
             {
-
                 var ids = category.ChildCategoryIDs();
                 ids.Add(category.Id);
 
                 // Lọc các Post có trong category (và con của nó)
                 posts = posts.Where(p => p.PostCategories
                    .Where(c => ids.Contains(c.CategoryID)).Any());
-
             }
             // Lấy tổng số dòng dữ liệu
             var totalItems = posts.Count();
@@ -98,7 +95,7 @@ namespace Blog.Controllers
             return View(await posts.ToListAsync());
         }
 
-        [Route("{slug}.html", Name = "viewonepost")]
+        [Route("/{slug}.html", Name = "viewonepost")]
         public async Task<IActionResult> DisplayPost()
         {
 

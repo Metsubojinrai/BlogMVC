@@ -33,41 +33,41 @@
     </thead>
     <tbody>
         @foreach (var item in Model)
-        {
-        <tr>
-            <td>
+         {
+            <tr>
+                <td>
 
-                <a title="xem chi tiết" asp-action="Details" asp-route-id="@item.PostId">
-                    <strong>@Html.DisplayFor(modelItem => item.Title)</strong>
-                </a>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author.UserName)
-            </td>
-            <td>
-                @item.DateCreated.ToShortDateString()
-                <br>
-                @item.DateUpdated.ToShortDateString()
-            </td>
+                    <a title="xem chi tiết" asp-action="Details" asp-route-id="@item.PostId">
+                        <strong>@Html.DisplayFor(modelItem => item.Title)</strong>
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author.UserName)
+                </td>
+                <td>
+                    @item.DateCreated.ToShortDateString()
+                    <br>
+                    @item.DateUpdated.ToShortDateString()
+                </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Published)
-            </td>
-            @*  cột hiện thị tên các danh mục của bài Post, các tên này được lấy ra bằng LINQ *@
-            <td>
-                @Html.Raw(string.Join("<br>",
-                    item.PostCategories
-                    .Select(p => p.Category)
-                    .ToList()
-                    .Select(c => $"<i>{c.Title}</i>")))
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Published)
+                </td>
+                @* cột hiện thị tên các danh mục của bài Post, các tên này được lấy ra bằng LINQ *@
+                <td>
+                    @Html.Raw(string.Join("<br>",
+                        item.PostCategories
+                        .Select(p => p.Category)
+                        .ToList()
+                        .Select(c => $"<i>{c.Title}</i>")))
+                </td>
 
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.PostId">Sửa</a> |
-                <a asp-action="Delete" asp-route-id="@item.PostId">Xóa</a>
-            </td>
-        </tr>
-        }
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.PostId">Sửa</a> |
+                    <a asp-action="Delete" asp-route-id="@item.PostId">Xóa</a>
+                </td>
+            </tr>
+         }
     </tbody>
 </table>
 
@@ -76,7 +76,8 @@
 
     Func<int?, string> generateUrl = (int? _pagenumber) =>
     {
-        return Url.ActionLink("Index", null, new { page = _pagenumber });
+        if (_pagenumber == 1) _pagenumber = null;
+        return Url.ActionLink("Index", null ,new { page = _pagenumber });
     };
 
     var datapaging = new

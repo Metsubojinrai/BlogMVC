@@ -3,7 +3,7 @@
     ViewData["Title"] = Model.Title;
     List<Category> categories = ViewBag.categories;
     Category category = Category.Find(categories,
-        Model.PostCategories.FirstOrDefault().CategoryID);
+        Model.PostCategories.FirstOrDefault()?.CategoryID ?? 0);
     Layout = "/Views/ViewPost/_PostLayout.cshtml";
 }
 

@@ -18,10 +18,13 @@
             <td>@user.ListRoles</td>
             <td>
                 <form method="POST" class="d-inline">
-                    <button name="Input.ID" value="@user.Id" class="btn btn-primary btn-sm"
-                            asp-controller="Role" asp-action="AssignUserRole">
+                    <a class="btn btn-primary btn-sm" asp-controller="Role" asp-action="AssignUserRole"> 
                         Cập nhật Role
-                    </button>
+                    </a>
+                    <a class="btn btn-danger btn-sm" asp-controller="Admin" asp-action="DeleteUser" 
+                       asp-route-id="@user.Id">
+                        Xóa
+                    </a>
                 </form>
             </td>
         </tr>

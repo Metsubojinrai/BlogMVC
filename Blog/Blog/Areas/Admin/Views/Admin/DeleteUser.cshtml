@@ -1,0 +1,53 @@
+﻿@model User
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "/Areas/Admin/Views/Admin/_Layout.cshtml";
+}
+
+@section TopBar {
+    @await Html.PartialAsync("/Areas/Admin/Views/Admin/_TopBar.cshtml")
+}
+
+@section SideBar {
+    <partial name="/Areas/Admin/Views/Admin/_SideBar.cshtml" />
+}
+<h1>Delete</h1>
+
+<h3>Bạn có muốn xóa tài khoản này?</h3>
+
+<div>
+    <h4>Xóa tài khoản</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="submit" value="Xóa" class="btn btn-danger" /> |
+        <a asp-action="ListUser" asp-controller="Role">Quay lại danh sách</a>
+    </form>
+</div>

@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using System; //khai báo sử dụng namespace System (chứa lớp Console)
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Blog
@@ -41,8 +42,8 @@ namespace Blog
             .AddEntityFrameworkStores<BlogDbContext>() //Thêm triển khai EF lưu trữ thông tin về Idetity(theo BlogDbContext -> MS SQL Server).
             .AddDefaultUI()
             .AddDefaultTokenProviders() //Thêm Token Provider - nó sử dụng để phát sinh token
-            .AddUserStore<UserStore<User, Role, BlogDbContext, Guid>>()
-            .AddRoleStore<RoleStore<Role, BlogDbContext, Guid>>()
+            .AddUserStore<UserStore<User, Role, BlogDbContext, long>>()
+            .AddRoleStore<RoleStore<Role, BlogDbContext, long>>()
             .AddErrorDescriber<CustomIdentityErrorDescriber>();
             services.AddControllersWithViews();
             services.Configure<IdentityOptions>(options =>
@@ -73,10 +74,8 @@ namespace Blog
             });
 
             services.ConfigureApplicationCookie(options => {
-                // options.Cookie.HttpOnly = true;
-                // options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-                options.LoginPath = $"/login/";
-                options.LogoutPath = $"/logout/";
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
                 options.AccessDeniedPath = $"/Account/AccessDenied";
             });
             services.AddTransient<IAuthorizationHandler, MinimumAgeHandler>();
@@ -91,6 +90,20 @@ namespace Blog
                         CloseTime = 22
                     });
                 });
+
+                options.AddPolicy("CanViewPost", policy => policy.RequireClaim("permission","post.view"));
+                options.AddPolicy("CanCreatePost", policy => policy.RequireClaim("permission", "post.create"));
+                options.AddPolicy("CanUpdatePost", policy => policy.RequireClaim("permission", "post.update"));
+                options.AddPolicy("CanDeletePost", policy => policy.RequireClaim("permission", "post.delete"));
+                options.AddPolicy("CanCreateUser", policy => policy.RequireClaim("permission", "user.create"));
+                options.AddPolicy("CanDeleteUser", policy => policy.RequireClaim("permission", "user.delete"));
+            });
+
+            services.Configure<SecurityStampValidatorOptions>(options =>
+            {
+                // Trên 30 giây truy cập lại sẽ nạp lại thông tin User (Role)
+                // SecurityStamp trong bảng User đổi -> nạp lại thông tinn Security
+                options.ValidationInterval = TimeSpan.FromSeconds(30);
             });
         }
 

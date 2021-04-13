@@ -68,7 +68,7 @@ namespace Blog.Core
             if (slug.EndsWith("-"))
                 slug = slug.Substring(0, slug.LastIndexOf("-"));
             if (slug.StartsWith("-"))
-                slug = slug.Substring(Math.Min(slug.IndexOf("-") + 1, slug.Length));
+                slug = slug[Math.Min(slug.IndexOf("-") + 1, slug.Length)..];
             return slug;
         }
     }

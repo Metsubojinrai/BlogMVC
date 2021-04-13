@@ -1,4 +1,5 @@
 ﻿using Blog.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -26,6 +27,8 @@ namespace Blog.Areas.Admin.Controllers
             }
         }
 
+        [Authorize(Policy = "CanCreateUser")]
+        [HttpGet]
         public IActionResult CreateUser()
         {
             return View();
@@ -42,6 +45,19 @@ namespace Blog.Areas.Admin.Controllers
                 else AddErrors(result);
             }
             return View(user);
+        }
+
+        
+        [Authorize(Policy = "CanDeleteUser")]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var user = await _userManager.FindByIdAsync(id);
+            await _userManager.DeleteAsync(user);
+            return RedirectToAction("ListUser", "Role");
         }
     }
 }
