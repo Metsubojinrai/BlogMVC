@@ -33,7 +33,12 @@
         <button type="submit" class="btn btn-primary btn-user btn-block">Đăng nhập</button>
     </form>
     <div class="text-center">
-        <a class="small" asp-area="Account" asp-controller="Account" asp-action="Register">Chưa có tài khoản, đăng ký mới</a>
+        <a class="small" id="forgot-password" asp-area="Account" asp-controller="Account" 
+           asp-action="ForgotPassword">Bạn quên mật khẩu?</a>
+    </div>
+    <div class="text-center">
+        <a class="small" asp-area="Account" asp-controller="Account" 
+           asp-action="Register">Chưa có tài khoản, đăng ký mới</a>
     </div>
 </div>
 @section Scripts {

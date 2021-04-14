@@ -1,4 +1,5 @@
 ﻿using Blog.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace Blog.Areas.Admin.Models
     public class ClaimsViewModel
     {
         public Role role { set; get; }
-        public IList<EditClaim> claims { get; set; }
-        public EditClaim claim { get; set; }
+        public IList<IdentityRoleClaim<long>> claims { get; set; }
+        public IdentityRoleClaim<long> claim { get; set; }
     }
 }

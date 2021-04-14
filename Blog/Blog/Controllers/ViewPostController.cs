@@ -33,7 +33,6 @@ namespace Blog.Controllers
         public async Task<IActionResult> Index([Bind(Prefix = "page")] int pageNumber,
                                         [FromRoute(Name = "slug")] string slugCategory)
         {
-
             var categories = GetCategories();
 
             Category category = null;
@@ -95,20 +94,17 @@ namespace Blog.Controllers
             return View(await posts.ToListAsync());
         }
 
-        [Route("/{slug}.html", Name = "viewonepost")]
-        public async Task<IActionResult> DisplayPost()
+        [Route("{slug}", Name = "viewonepost")]
+        public async Task<IActionResult> DisplayPost(string category, string slug)
         {
-
-            string Slug = (string)Request.RouteValues["slug"];
-
-            if (string.IsNullOrEmpty(Slug))
+            if (string.IsNullOrEmpty(slug))
             {
                 return NotFound("Không thấy trang");
             }
 
             // Truy vấn lấy bài viết theo Slug
             var post = await _context.Posts
-                .Where(p => p.Slug == Slug)
+                .Where(p => p.Slug == slug)
                 .Include(p => p.Author)
                 .Include(p => p.PostCategories)
                 .ThenInclude(c => c.Category)

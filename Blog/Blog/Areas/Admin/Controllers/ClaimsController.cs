@@ -15,7 +15,7 @@ namespace Blog.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("[controller]/[action]")]
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
     public class ClaimsController : Controller
     {
         private readonly RoleManager<Role> _roleManager;
@@ -36,7 +36,7 @@ namespace Blog.Areas.Admin.Controllers
                 role = role,
                 claims = await (from c in _dbContext.RoleClaims
                                 where c.RoleId == role.Id
-                                select new EditClaim()
+                                select new IdentityRoleClaim<long>()
                                 {
                                     Id = c.Id,
                                     ClaimType = c.ClaimType,
@@ -78,10 +78,60 @@ namespace Blog.Areas.Admin.Controllers
                 };
                 _dbContext.RoleClaims.Add(claim);
                 await _dbContext.SaveChangesAsync();
-                return RedirectToAction(nameof(Index), new { id = id });
+                return RedirectToAction(nameof(Index), new { id });
             }
 
             return View(model);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> UpdateClaim(int? claimId)
+        {
+            if (claimId == null)
+            {
+                return NotFound();
+            }
+
+            var Claim = await _dbContext.RoleClaims.FindAsync(claimId);
+            if (Claim == null)
+            {
+                return NotFound();
+            }
+            var model = new ClaimsViewModel
+            {
+                claim = Claim
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("{id}")]
+        public async Task<IActionResult> UpdateClaim(int claimId, ClaimsViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                var claim = _dbContext.RoleClaims.Find(claimId);
+                claim.ClaimType = model.claim.ClaimType;
+                claim.ClaimValue = model.claim.ClaimValue;
+                _dbContext.RoleClaims.Update(claim);
+                await _dbContext.SaveChangesAsync();
+                return RedirectToAction(nameof(Index), new { id = claim.RoleId });
+            }
+            return View(model);
+        }
+
+        [Route("{id}")]
+        public async Task<IActionResult> DeleteClaim(int? claimId)
+        {
+            if (claimId == null)
+            {
+                return NotFound();
+            }
+            var claim = _dbContext.RoleClaims.Find(claimId);        
+            _dbContext.RoleClaims.Remove(claim);
+            await _dbContext.SaveChangesAsync();              
+            return RedirectToAction(nameof(Index), new { id = claim.RoleId });
         }
     }
 }

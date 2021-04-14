@@ -488,7 +488,6 @@ D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Admin\Views\Role\EditRo
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Admin\Views\Claims\_Layout.cshtml.g.cs
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Admin\Views\Claims\_SideBar.cshtml.g.cs
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Admin\Views\Claims\CreateClaim.cshtml.g.cs
-D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Admin\Views\Admin\DeleteUser.cshtml.g.cs
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Admin\Views\Admin\_SideBar.cshtml.g.cs
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Views\Post\Create.cshtml.g.cs
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Views\Post\Delete.cshtml.g.cs
@@ -497,3 +496,13 @@ D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Views\Post\Edit.cshtml.g.cs
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Views\Post\Index.cshtml.g.cs
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Views\Post\_Layout.cshtml.g.cs
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Views\Post\_SideBar.cshtml.g.cs
+D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Admin\Views\Claims\UpdateClaim.cshtml.g.cs
+D:\New folder (2)\Blog\Blog\bin\Debug\net5.0\MailKit.dll
+D:\New folder (2)\Blog\Blog\bin\Debug\net5.0\MimeKit.dll
+D:\New folder (2)\Blog\Blog\bin\Debug\net5.0\BouncyCastle.Crypto.dll
+D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Account\Views\Account\ConfirmEmail.cshtml.g.cs
+D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Account\Views\Account\RegisterConfirmation.cshtml.g.cs
+D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Account\Views\Account\ForgotPasswordConfirmation.cshtml.g.cs
+D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Account\Views\Account\ResetPassword.cshtml.g.cs
+D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Account\Views\Account\ForgotPassword.cshtml.g.cs
+D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Account\Views\Account\ResetPasswordConfirmation.cshtml.g.cs

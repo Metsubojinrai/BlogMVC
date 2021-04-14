@@ -1,5 +1,6 @@
 ﻿using Blog.CustomAuthorization;
 using Blog.Data;
+using Blog.Mail;
 using Blog.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -65,12 +67,22 @@ namespace Blog
                 options.User.AllowedUserNameCharacters = //Ký tự cho phép có trong tên user
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = true; //Email là duy nhất
+
+                // Cấu hình đăng nhập.
+                options.SignIn.RequireConfirmedEmail = true; // Cấu hình xác thực địa chỉ email (email phải tồn tại)
             });
+
+            services.AddOptions();                                        // Kích hoạt Options
+            var mailsettings = Configuration.GetSection("MailSettings");  // đọc config
+            services.Configure<MailSettings>(mailsettings);               // đăng ký để Inject
+
+            services.AddTransient<IEmailSender, SendMailService>();        // Đăng ký dịch vụ Mail
+
             services.Configure<RouteOptions>(options =>
             {
-                options.AppendTrailingSlash = false; //thêm dấu / vào cuối url
+                options.AppendTrailingSlash = false;         //thêm dấu / vào cuối url
                 options.LowercaseUrls = true;               // url chữ thường
-                options.LowercaseQueryStrings = false;      // không bắt query trong url phải in thường
+                options.LowercaseQueryStrings = false;     // không bắt query trong url phải in thường
             });
 
             services.ConfigureApplicationCookie(options => {
