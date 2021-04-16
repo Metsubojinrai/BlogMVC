@@ -364,7 +364,6 @@ D:\New folder (2)\Blog\Blog\bin\Debug\net5.0\zh-Hans\Microsoft.CodeAnalysis.Work
 D:\New folder (2)\Blog\Blog\bin\Debug\net5.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\New folder (2)\Blog\Blog\bin\Debug\net5.0\runtimes\win-arm\lib\net5.0\dotnet-aspnet-codegenerator-design.exe
 D:\New folder (2)\Blog\Blog\bin\Debug\net5.0\runtimes\win-arm64\lib\net5.0\dotnet-aspnet-codegenerator-design.exe
-D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Blog.csprojAssemblyReference.cache
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Blog.GeneratedMSBuildEditorConfig.editorconfig
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Blog.AssemblyInfoInputs.cache
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Blog.AssemblyInfo.cs
@@ -450,7 +449,6 @@ D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Manage\Views\Manage\_La
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Manage\Views\_ViewImports.cshtml.g.cs
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Manage\Views\_ViewStart.cshtml.g.cs
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Admin\Views\Admin\_Layout.cshtml.g.cs
-D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Admin\Views\Admin\_TopBar.cshtml.g.cs
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Admin\Views\_ViewImports.cshtml.g.cs
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Admin\Views\_ViewStart.cshtml.g.cs
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Manage\Views\Manage\_StatusMessage.cshtml.g.cs
@@ -481,7 +479,6 @@ D:\New folder (2)\Blog\Blog\bin\Debug\net5.0\libman.json
 D:\New folder (2)\Blog\Blog\bin\Debug\net5.0\elFinder.NetCore.dll
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Views\ViewPost\_PostLayout.cshtml.g.cs
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
-D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Views\Shared\_SideBar.cshtml.g.cs
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Views\Shared\_TopBar.cshtml.g.cs
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Admin\Views\Claims\Index.cshtml.g.cs
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Admin\Views\Role\EditRole.cshtml.g.cs
@@ -506,3 +503,14 @@ D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Account\Views\Account\F
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Account\Views\Account\ResetPassword.cshtml.g.cs
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Account\Views\Account\ForgotPassword.cshtml.g.cs
 D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Account\Views\Account\ResetPasswordConfirmation.cshtml.g.cs
+D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Blog.csproj.AssemblyReference.cache
+D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Account\Views\Account\ConfirmEmailChange.cshtml.g.cs
+D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Account\Views\Account\_StatusMessage.cshtml.g.cs
+D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Manage\Views\Manage\Email.cshtml.g.cs
+D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Views\Product\Index.cshtml.g.cs
+D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Views\Product\Cart.cshtml.g.cs
+D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Views\Shared\_CartPartial.cshtml.g.cs
+D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Areas\Admin\Views\Admin\_Footer.cshtml.g.cs
+D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Views\Shared\_Footer.cshtml.g.cs
+D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Views\Shared\_TestLayout.cshtml.g.cs
+D:\New folder (2)\Blog\Blog\obj\Debug\net5.0\Razor\Views\Home\Test.cshtml.g.cs

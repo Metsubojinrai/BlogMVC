@@ -241,10 +241,9 @@ namespace Blog.Areas.Account.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return View(model);
 
             // Tìm User theo email
@@ -255,7 +254,7 @@ namespace Blog.Areas.Account.Controllers
                 return RedirectToAction("ResetPasswordConfirmation");
             }
 
-            // Đặt lại passowrd chu user - có kiểm tra mã token khi đổi
+            // Đặt lại passowrd user - có kiểm tra mã token khi đổi
             var result = await _userManager.ResetPasswordAsync(user, model.Input.Code, model.Input.Password);
 
             if (result.Succeeded)
@@ -274,8 +273,9 @@ namespace Blog.Areas.Account.Controllers
             return View(model);
         }
 
-        public IActionResult ResetPasswordConfirmation()
+        public IActionResult ResetPasswordConfirmation(string returnUrl = "")
         {
+            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
@@ -342,6 +342,35 @@ namespace Blog.Areas.Account.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmailChange(string userId, string email, string code)
+        {
+            if (userId == null || email == null || code == null)
+            {
+                return RedirectToAction("Index","Home");
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{userId}'.");
+            }
+
+            code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
+            var result = await _userManager.ChangeEmailAsync(user, email, code);
+            var model = new ConfirmEmailChangeViewModel();
+            if (!result.Succeeded)
+            {
+                model.StatusMessage = "Error changing email.";
+                return View(model);
+            }
+
+            await _signManager.RefreshSignInAsync(user);
+            model.StatusMessage = "Thank you for confirming your email change.";
+            return View(model);
+
+        }
+
         [AllowAnonymous]
         public IActionResult Lockout()
         {

@@ -4,11 +4,15 @@
 
 @RenderBody()
 @section TopBar {
-    @await Html.PartialAsync("/Areas/Admin/Views/Admin/_TopBar.cshtml")
+    @await Html.PartialAsync("/Views/Shared/_TopBar.cshtml")
 }
 
 @section SideBar {
     <partial name="/Areas/Admin/Views/Role/_SideBar.cshtml" />
+}
+
+@section Footer {
+    <partial name="/Views/Shared/_Footer.cshtml" />
 }
 
 @section Scripts {

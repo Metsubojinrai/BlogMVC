@@ -108,6 +108,57 @@ namespace Blog.Migrations
                     b.ToTable("PostCategories");
                 });
 
+            modelBuilder.Entity("Blog.Models.Product", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("ProductId");
+
+                    b.ToTable("Product");
+
+                    b.HasData(
+                        new
+                        {
+                            ProductId = 1,
+                            Description = "Số 1 cao 40cm rộng 20cm dày 20cm màu xanh lá cây đậm",
+                            Name = "Đá phong thuỷ tự nhiên",
+                            Price = 1000000m
+                        },
+                        new
+                        {
+                            ProductId = 2,
+                            Description = "Trang trí trong nhà Chất liệu : • Đá muối",
+                            Name = "Đèn đá muối hình tròn",
+                            Price = 1500000m
+                        },
+                        new
+                        {
+                            ProductId = 3,
+                            Description = "Tranh sơn mài loại nhỏ 15x 15 giá 50.000",
+                            Name = "Tranh sơn mài",
+                            Price = 50000m
+                        },
+                        new
+                        {
+                            ProductId = 4,
+                            Description = "Nguyên liệu thể hiện :    Sơn dầu",
+                            Name = "Tranh sơn dầu - Ngựa",
+                            Price = 450000m
+                        });
+                });
+
             modelBuilder.Entity("Blog.Models.Role", b =>
                 {
                     b.Property<long>("Id")

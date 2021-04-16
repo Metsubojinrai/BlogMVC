@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Blog.Core;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Blog.CustomAuthorization;
 
 namespace Blog.Areas_Admin_Controllers
 {
@@ -210,12 +211,12 @@ namespace Blog.Areas_Admin_Controllers
             }
 
             // Kiểm tra nhóm Admin hoặc chủ sở hữu Post thì có quyênn
-            //var rs = await _authorizationService.AuthorizeAsync(User, post,
-            //                                                    new CanUpdatePostRequirement(true, true));
-            //if (!rs.Succeeded)
-            //{
-            //    return Forbid();
-            //}
+            var rs = await _authorizationService.AuthorizeAsync(User, post,
+                                                                new CanUpdatePostRequirement(true, true));
+            if (!rs.Succeeded)
+            {
+                return Forbid();
+            }
             // Có quyền
 
             // Phát sinh Slug theo Title

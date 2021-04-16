@@ -157,6 +157,21 @@ namespace Blog.Areas.Admin.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> AssignUserRole(string id)
+        {
+            var model = new AssignUserRoleViewModel
+            {
+                Input = new AssignUserRoleViewModel.InputModel
+                {
+                    ID = id
+                }
+            };
+            var allroles = await _roleManager.Roles.ToListAsync();
+
+            allroles.ForEach((r) => { model.AllRoles.Add(r.Name); });
+            return View(model);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AssignUserRole(AssignUserRoleViewModel model)
         {
@@ -168,7 +183,7 @@ namespace Blog.Areas.Admin.Controllers
             var allroles = await _roleManager.Roles.ToListAsync();
 
             allroles.ForEach((r) => { model.AllRoles.Add(r.Name); });
-            if (!model.IsConfirmed)
+            if (model.IsConfirmed)
             {
                 model.Input.RoleNames = roles.ToArray();
                 model.IsConfirmed = true;

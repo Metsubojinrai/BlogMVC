@@ -10,12 +10,16 @@
 
 @RenderBody()
 
-@section TopBar {
-    @await Html.PartialAsync("/Areas/Admin/Views/Admin/_TopBar.cshtml")
+@section Topbar {
+    @await Html.PartialAsync("/Views/Shared/_TopBar.cshtml")
 }
 
 @section SideBar {
     <partial name="/Areas/Manage/Views/Manage/_ManageNav.cshtml" />
+}
+
+@section Footer {
+    <partial name="/Views/Shared/_Footer.cshtml" />
 }
 
 @section Scripts {

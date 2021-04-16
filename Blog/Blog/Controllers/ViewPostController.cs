@@ -94,8 +94,8 @@ namespace Blog.Controllers
             return View(await posts.ToListAsync());
         }
 
-        [Route("{slug}", Name = "viewonepost")]
-        public async Task<IActionResult> DisplayPost(string category, string slug)
+        [Route("{slug}.html", Name = "viewonepost")]
+        public async Task<IActionResult> DisplayPost(string slug)
         {
             if (string.IsNullOrEmpty(slug))
             {
